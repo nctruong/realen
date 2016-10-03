@@ -1,0 +1,5 @@
+<h1>New Phrase</h1>
+
+<%= render 'form', phrase: @phrase, sentence: @sentence, purl: sentence_phrases_path(@sentence) %><!-- private url: purl -->
+
+<%= link_to 'Back', sentence_phrases_path %>

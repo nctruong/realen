@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+<% flash.each do |key, value| %>
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <div class="alert alert-<%= key %>"><%= key %> - <%= value %></div>
+<% end %>
+<h1>Sentences</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Comment</th>
+      <th colspan="4"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <% @sentences.each do |sentence| %>
+      <tr>
+        <td><%= sentence.content %></td>
+        <td><%= sentence.comment %></td>
+        <% if sentence.section_id %>
+        <% section = Section.find(sentence.section_id) %>
+        <td><%= link_to 'Phrase', sentence_phrases_path(sentence) %></td>
+        <td><%= link_to 'Show', section_sentence_path(section,sentence) %></td>
+        <td><%= link_to 'Edit', edit_section_sentence_path(section,sentence) %></td>
+        <td><%= link_to 'Destroy', section_sentence_path(section,sentence), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sentence', new_section_sentence_path %>

@@ -1,0 +1,41 @@
+<p><%= sentence.content %></p>
+<%= form_for phrase, url: purl do |f| %>
+  <% if phrase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(phrase.errors.count, "error") %> prohibited this phrase from being saved:</h2>
+
+      <ul>
+      <% phrase.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_field :content %>
+  </div>
+
+  <div class="field">
+    <%= f.label :phonetic_symbols %>
+    <%= f.text_field :phonetic_symbols %>
+  </div>
+
+  <div class="field">
+    <p>
+      <%= f.label :audio, "Upload audio file:" %><br />
+      <%= f.file_field :audio %>
+      <%= f.hidden_field :audio_cache %>
+    </p>
+  </div>
+
+  <div class="field">
+    <%= f.label :comment %>
+    <%= f.text_field :comment %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

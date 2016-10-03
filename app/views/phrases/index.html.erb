@@ -1,0 +1,59 @@
+<script>
+
+  function playAudio(id) {
+    x = document.getElementById(id);
+    x.play();
+  }
+
+  function stopAudio(id) {
+    x = document.getElementById(id);
+    x.pause();
+  }
+
+</script>
+<p id="notice"><%= notice %></p>
+<% flash.each do |key, value| %>
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <div class="alert alert-<%= key %>"><%= key %> - <%= value %></div>
+<% end %>
+<h1>Phrases</h1>
+<%= link_to "Back to sentences", section_sentences_path(Section.find(@sentence.section_id)) %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Comment</th>
+      <th>Sound</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @phrases.each do |phrase| %>
+      <tr>
+        <td>
+          <%= phrase.content %><br>
+          <%= phrase.phonetic_symbols %>
+        </td>
+        <td><%= phrase.comment %></td>
+        <td>
+          <audio id="<%= phrase.id %>">
+            <source src="<%= phrase.audio %>" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+          <image onclick="playAudio(<%= phrase.id %>)" src="/play.png" height="20" width="20"/>
+          <image onclick="stopAudio(<%= phrase.id %>)" src="/pause.png" height="20" width="20"/>
+        </td>
+
+        <% sentence = Sentence.find(phrase.sentence_id) unless phrase.sentence_id.nil? %>
+        <td><%= link_to 'Show', sentence_phrase_path(sentence,phrase) %></td>
+        <td><%= link_to 'Edit', edit_sentence_phrase_path(sentence,phrase) %></td>
+        <td><%= link_to 'Destroy', sentence_phrase_path(sentence,phrase), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Phrase', new_sentence_phrase_path %>
